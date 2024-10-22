@@ -33,18 +33,38 @@ int convToDec(const string &num, int base){
 	int value = 0;
 	int len = num.length();
 	for(int i = 0; i < len; i++){
-		char digit = num[len - i - i]; //Tomar digitos desde la izq
+		char digit = num[len - i - 1]; //Tomar digitos desde la izq
 		int numValue = charToValue(digit);
 		
 		if(numValue >= base){
-			cout<<"Error: Digito invalido para la base"<<endl;
 			return -1;
 		}
 		
 		value += numValue* pow(base, i);
 	}
-	return valorDecimal;
+	return value;
 }
+void inputNumber(string &in, int n, int base) {
+    string ans;
+    int num;
+    do {
+        cin >> ans;
+        num = convToDec(ans, base);
+		if(num == 0){
+			in = "0";
+			return;
+		} 
+        if (num == -1) {
+            cout << "Error: Digito invalido para la base" << endl;
+        } else if ((int)log2(num) + 1 > n) { 
+            cout << "Error: Solo se usan "<<(int)log2(num) + 1 << " bits, no se usan " << n << " bits" << endl;
+        } else {
+            in = ans; 
+        }
+    } while (num == -1 || (int)log2(num) + 1 > n);
+}
+
+
 
 tuple<int, int> fullAdder(int A, int B, int Cin){
 	int S = A ^ B ^ Cin;
@@ -91,17 +111,24 @@ int main(){
 				
 	}while(base < 2 || base > 16 || cin.fail());
 	
-	cout << "\033[42m" << "Valores seleccionados" << "\033[0m" << std::endl;
+	cout << "\033[42m" << "Valores seleccionados" << "\033[0m" << endl;
 
     cout << YELLOW << "Cantidad de bits: " << n << endl;
     cout << YELLOW << "Sistema numerico: " << base << endl;
 	cout << RESET << endl;
 	
+	cout<<"Ingrese el numero 1"<<endl;
+	inputNumber(n1, n, base);
+	cout<<"Ingrese el numero 2"<<endl;
+	inputNumber(n2, n, base);
 	
-	//ingresar numeros deacuerdo a lo establecido...
+	cout << "\033[42m" << "Numeros seleccionados" << "\033[0m" << endl;
+    cout << YELLOW << "Numero 1: " << n1 << endl;
+    cout << YELLOW << "Numero 2: " << n2 << endl;
+	cout << RESET << endl;
+	
+	cout << "\033[43m" << RED  << "Comenzando operacion" << RESET << endl;
 
-	
-	//convertir los numeros a sistema binario...
 	
 	
 	return 0;
