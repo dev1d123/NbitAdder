@@ -31,11 +31,22 @@ tuple<int, int> fullAdder(int A, int B, int Cin){
 
 int main(){
 	cout << "========================================\n";
-    tipoEscritura(BOLD + BLUE + "===  ", 50);
-    tipoEscritura(GREEN + "S U M A D O R", 100);
-    tipoEscritura(GREEN + "  D E  ", 100);
-    tipoEscritura(GREEN + "N  B I T S", 100);
-    tipoEscritura(BLUE + "  ===\n", 50);
+    tipoEscritura(BOLD + BLUE + "===  ", 20);
+    tipoEscritura(GREEN + "S U M A D O R", 50);
+    tipoEscritura(GREEN + "  D E  ", 50);
+    tipoEscritura(GREEN + "N  B I T S", 50);
+    tipoEscritura(BLUE + "  ===\n", 20);
 	cout << "========================================\n";
+	cout<<"\n\n\n";
+	int n;
+	cout<<"Ingrese la cantidad de bits a operar (0 - 64): "<<endl;
+	cin>>n;
+
+	
+	int base;
+	
+	cout<<"Ingresar el sistema numerico a trabajar (2 - 16): "<<endl;
+	cin>>base;
+	
 	return 0;
 }
