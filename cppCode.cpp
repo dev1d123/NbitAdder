@@ -21,6 +21,30 @@ void tipoEscritura(string texto, int delay = 50, string color = RESET) {
     cout<<RESET;
 }
 
+/*Funciones para el input de los numeros*/
+int charToValue(char c) {
+    if (isdigit(c)) {
+        return c - '0'; 
+    } else {
+        return toupper(c) - 'A' + 10; 
+    }
+}
+int convToDec(const string &num, int base){
+	int value = 0;
+	int len = num.length();
+	for(int i = 0; i < len; i++){
+		char digit = num[len - i - i]; //Tomar digitos desde la izq
+		int numValue = charToValue(digit);
+		
+		if(numValue >= base){
+			cout<<"Error: Digito invalido para la base"<<endl;
+			return -1;
+		}
+		
+		value += numValue* pow(base, i);
+	}
+	return valorDecimal;
+}
 
 tuple<int, int> fullAdder(int A, int B, int Cin){
 	int S = A ^ B ^ Cin;
@@ -39,14 +63,46 @@ int main(){
 	cout << "========================================\n";
 	cout<<"\n\n\n";
 	int n;
-	cout<<"Ingrese la cantidad de bits a operar (0 - 64): "<<endl;
-	cin>>n;
+	int base;
+	string n1;
+	string n2;
+	
+	do{
+		cout<<"Ingrese la cantidad de bits a operar (0 - 64): "<<endl;
+		cin>>n;	
+		if(cin.fail() || n < 0 || n > 64){
+			cin.clear();
+			cin.ignore();
+			cout << "Error: Entrada invalida. Debe ser un numero entre 0 y 64.\n";
+		}
+		
+				
+	}while(n < 0 || n > 64 || cin.fail());
+
+	do{
+		cout<<"Ingresar el sistema numerico a trabajar (2 - 16): "<<endl;
+		cin>>base;	
+		if(cin.fail() || base < 2 || base > 16){
+			cin.clear();
+			cin.ignore();
+			cout << "Error: Entrada invalida. Debe ser un numero entre 2 y 16.\n";
+		}
+		
+				
+	}while(base < 2 || base > 16 || cin.fail());
+	
+	cout << "\033[42m" << "Valores seleccionados" << "\033[0m" << std::endl;
+
+    cout << YELLOW << "Cantidad de bits: " << n << endl;
+    cout << YELLOW << "Sistema numerico: " << base << endl;
+	cout << RESET << endl;
+	
+	
+	//ingresar numeros deacuerdo a lo establecido...
 
 	
-	int base;
+	//convertir los numeros a sistema binario...
 	
-	cout<<"Ingresar el sistema numerico a trabajar (2 - 16): "<<endl;
-	cin>>base;
 	
 	return 0;
 }
