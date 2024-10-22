@@ -11,6 +11,7 @@ const string YELLOW = "\033[33m";
 const string BLUE = "\033[34m";
 const string CYAN = "\033[36m";
 const string MAGENTA = "\033[35m";
+const string BG_BLUE = "\033[44m";
 
 void tipoEscritura(string texto, int delay = 50, string color = RESET) {
 	cout<<color;
@@ -29,7 +30,7 @@ int charToValue(char c) {
         return toupper(c) - 'A' + 10; 
     }
 }
-int convToDec(const string &num, int base){
+long convToDec(const string &num, int base){
 	int value = 0;
 	int len = num.length();
 	for(int i = 0; i < len; i++){
@@ -65,6 +66,7 @@ void inputNumber(string &in, int n, int base) {
 }
 
 
+/*Funciones para la suma binaria de n bits*/
 
 tuple<int, int> fullAdder(int A, int B, int Cin){
 	int S = A ^ B ^ Cin;
@@ -72,6 +74,32 @@ tuple<int, int> fullAdder(int A, int B, int Cin){
 	 
 	return make_tuple(S, Cout);
 }
+
+string sumaBinaria(const string &bin1, string &bin2, int n){
+	string res(n, '0');
+	int Cin = 0;
+	for(int i = n - 1; i >= 0; i--){
+		int bit1 = bin1[i] - '0';
+		int bit2 = bin2[i] - '0';
+		int S, Cout;
+		tie(S, Cout) = fullAdder(bit1, bit2, Cin);
+		res[i] = S + '0';
+		cout << "Bit " << n - i << ": " << endl;
+        cout << "  bit1 = " << bit1 << ", bit2 = " << bit2 << ", Cin = " << Cin << endl;
+        cout << "  S = " << S << ", Cout = " << Cout << endl;
+        cout << "  Resultado parcial: " << res << endl;
+        cout << "=============================" << endl;
+		Cin = Cout;
+	}
+	if(Cin == 1){
+		res = "1" + res;
+		cout << "Acarreo final: 1, Resultado actualizado: " << res << endl;
+
+	}
+	return res;
+	
+}
+
 
 int main(){
 	cout << "========================================\n";
@@ -128,8 +156,23 @@ int main(){
 	cout << RESET << endl;
 	
 	cout << "\033[43m" << RED  << "Comenzando operacion" << RESET << endl;
-
 	
+	int num1 = convToDec(n1, base); 
+	
+	int num2 = convToDec(n2, base);
+	
+	bitset<64> binario1(num1);
+    bitset<64> binario2(num2);
+    
+	string bin1 = binario1.to_string().substr(64 - n);
+	string bin2 = binario2.to_string().substr(64 - n);
+	cout<< n1 <<" -> \t"<< bin1 <<endl;
+	cout<< n2 <<" -> \t"<< bin2 <<endl;
+	
+    string resultado = sumaBinaria(bin1, bin2, n);
+    
+    long resultadoNum = convToDec(resultado, 2);
+    cout << BG_BLUE << BOLD << "Resultado de la suma: " << RESET << BOLD << GREEN << resultado <<" -> "<<resultadoNum<< RESET << endl;
 	
 	return 0;
 }
